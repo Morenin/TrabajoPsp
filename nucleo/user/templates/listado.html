@@ -18,7 +18,7 @@
           <td>
           {% if c.groups.all %}
           {% for group in c.groups.all%}
-          <span class="badge badge-succes">{{group}}</span>
+          <span class="badge badge-succes">{{group.name}}</span>
           {% endfor %}
           {% else %}
           <span class="badge badge-succes">Esperando confirmacion</span>
