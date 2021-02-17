@@ -1,0 +1,87 @@
+{% extends 'list.html' %}
+
+{% block columns %}
+        <tr>
+          <th scope="col">Motivo</th>
+          <th scope="col">Observacion</th>
+          <th scope="col">Estado del arreglo</th>
+          <th scope="col">Coche</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Mecanico</th>
+          <th scope="col">Fecha de solicitud</th>
+          <th scope="col">Fecha de arreglo</th>
+          <th scope="col">Opciones</th>
+        </tr>
+{% endblock %}
+{% block rows %}
+        {% for c in object_list %}
+       
+        <tr>
+         {% for g in request.user.groups.all%}
+          {% if g.name != "Cliente"%}
+          <td>{{ c.Motivo }}</td>
+          <td>{{ c.Observacion }}</td>
+          {% if c.Arreglado == True %}
+          <td>Arreglado</td>
+          {% endif %}
+          {% if c.Arreglado == False %}
+          <td>En reparacion</td>
+          {% endif %}
+          <td>{{ c.Id_Coche }}</td>
+          <td>{{ c.Id_Cliente }}</td>
+          {% for c1 in c.Id_Mecanico.all%}
+          <td>{{ c1.first_name }}</td>
+          {% endfor %}
+          <td>{{ c.FechaSolicitud }}</td>
+          <td>{{ c.FechaArreglo }}</td>
+          <td>
+          {% endif %}
+           {% if g.name == "Cliente"%}
+            {% if c.Id_Cliente == request.user %}
+            <td>{{ c.Motivo }}</td>
+          <td>{{ c.Observacion }}</td>
+          {% if c.Arreglado == True %}
+          <td>Arreglado</td>
+          {% endif %}
+          {% if c.Arreglado == False %}
+          <td>En reparacion</td>
+          {% endif %}
+          <td>{{ c.Id_Coche }}</td>
+          <td>{{ c.Id_Cliente }}</td>
+          {% for c1 in c.Id_Mecanico.all%}
+          <td>{{ c1.first_name }}</td>
+          {% endfor %}
+          <td>{{ c.FechaSolicitud }}</td>
+          <td>{{ c.FechaArreglo }}</td>
+          <td>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+            {% for user in request.user.groups.all%}
+            {% if user.name != 'Cliente'%}
+            {% if user.name != 'Mecanico'  %}
+            <a href="{% url 'reparacion_edit' c.id %}" class="btn btn-warning btn-xs btn-flat">
+              <i class="fas fa-edit"></i>
+            </a>
+            {% endif %}
+            {% if user.name == 'Mecanico'  %}
+              {% if c.Arreglado == False%}
+            <a href="{% url 'reparacion_edit' c.id %}" class="btn btn-warning btn-xs btn-flat">
+              <i class="fas fa-check"></i>
+            </a>
+              {% endif %}
+            {% endif %}
+            {% if c.Arreglado == True %}
+            <a href="{% url 'reparacion_pdf' c.id %}" class="btn btn-info btn-xs btn-flat">
+              <i class="fas fa-file-pdf"></i>
+            </a>
+            {% endif %}
+            <a href="{% url 'reparacion_delete' c.id %}" class="btn btn-danger btn-xs btn-flat">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+            {% endif %}
+            {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+{% endblock %}

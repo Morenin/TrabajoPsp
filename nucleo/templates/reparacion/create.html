@@ -1,0 +1,75 @@
+{% extends 'body.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-plus"></i>
+                    {{ title }}
+                </h3>
+            </div>
+            <div class="card-body">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type?"button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                    <h5><i class="icon fas fa-ban"></i> Alerta</h5>
+                    <ul>
+                    {% for field in form %}
+                        {% for error in field.errors%}
+                            <li>{{error}}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% for user in request.user.groups.all%}
+                    {% if user.name == 'Mecanico'%} 
+                    <label for="Motivo">Motivo:</label>
+                        {{ form.Motivo |  attr:'readonly' }}
+                    <label for="Observacion">Observacion:</label>
+                        {{ form.Observacion |  attr:'readonly'}}
+                    <label for="Coche">Coche:</label>
+                        {{ form.Id_Coche |  attr:'readonly'}}
+                    <label for="Mecanico">Mecanico:</label>
+                        {{ form.Id_Mecanico |  attr:'readonly'}}
+                    <label for="Arreglado">Esta Arreglado:</label>
+                        {{ form.Arreglado }} 
+                    {% endif %} 
+                    {% if user.name != 'Mecanico' %} 
+                    <label for="Motivo">Motivo:</label>
+                        {{ form.Motivo  }}
+                    <label for="Observacion">Observacion:</label>
+                        {{ form.Observacion }}
+                    <label for="Coche">Coche:</label>
+                        {{ form.Id_Coche   }}
+                    <label for="Mecanico">Mecanico:</label>
+                        {{ form.Id_Mecanico   }}
+                    {% endif %}
+                    {% if user.name == 'Admin' %} 
+                    <label for="Arreglado">Esta Arreglado:</label>
+                        {{ form.Arreglado }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary btn-flat">
+                    <i class="fas fa-plus"></i> Guardar Reparacion
+                </button>
+                {% for user in request.user.groups.all%}
+                 {% if user.name != 'Cliente'%} 
+                <a href="{% url 'reparacion_list' %}" class="btn btn-primary btn-flat float-right ">
+                    <i class="fas fa-backward"></i> Atras
+                </a>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+
+
+ 

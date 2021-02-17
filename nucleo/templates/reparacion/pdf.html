@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+    .img-invoice {
+        width: 50px;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    #invoice thead tr th {
+        text-align: left;
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        padding-top: 4px;
+    }
+
+    #invoice thead tr {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0;
+    }
+
+</style>
+<body>
+<img src="{{ icon }}" class="img-invoice">
+<p class="head">
+    
+</p>
+<p>
+    <b>Cliente:</b> {{ rep.Id_Cliente.first_name }}  {{rep.Id_Cliente.last_name}}<br>
+    <b>DNI:</b> {{ rep.Id_Cliente.Dni }}<br>
+    <b>Fecha Entrega:</b> {{ rep.FechaSolicitud }}<br>
+    <b>Fecha Reparacion:</b> {{ rep.FechaArreglo }}<br>
+    
+    {% for repm in rep.Id_Mecanico.all%}
+        <b style="text-align: right">Reparado por: {{ repm.first_name }} {{repm.last_name}}</b>     
+    {% endfor %}    
+    
+</p>
+<table id="invoice">
+    <thead>
+    <tr>
+        <th style="width: 20%;">Coche </th>
+        <th style="width: 30%;">Motivo</th>
+        <th style="width: 50%;">Observacion</th>
+       
+    </tr>
+    </thead>
+
+    <tbody>
+        <tr style="padding-top: 3px;">
+            <td>{{ rep.Id_Coche.Marca }} {{ rep.Id_Coche.Modelo }}</td>
+            <td>{{ rep.Motivo }}</td>
+            <td>{{ rep.Observacion }}</td>  
+        </tr>
+    </tbody>
+    
+</table>
+<table style="margin-top: 250px;">
+    <thead>
+    <tr>
+        <th>GRACIAS POR SU CONFIANZA</th>
+    </tr>
+    </thead>
+</table>
+</body>
+</html>

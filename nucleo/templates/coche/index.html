@@ -1,0 +1,62 @@
+{% extends 'list.html' %}
+
+{% block columns %}
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Modelo</th>
+          <th scope="col">Color</th>
+          <th scope="col">Fecha de matriculacion</th>
+          <th scope="col">Propietario</th>
+          <th scope="col">Imagen</th>
+          <th scope="col">Opciones</th>
+        </tr>
+{% endblock %}
+{% block rows %}
+        {% for c in object_list %}
+        <tr>
+        {% if c.Cliente_id == request.user %}
+          <td>{{ c.id }}</td>
+          <td>{{ c.Marca }}</td>
+          <td>{{ c.Modelo }}</td>
+          <td>{{ c.Color }}</td>
+          <td>{{ c.FechaMatri }}</td>
+          <td>{{ c.Cliente_id }}</td>
+          <td class="text-center">
+            <img src="{{ c.get_imagen }}" class="img-fluid d-block mx-auto" style=" width: 35px; height: 35px;">
+          </td>
+          <td>
+            <a href="{% url 'coche_edit' c.id %}" class="btn btn-warning btn-xs btn-flat">
+              <i class="fas fa-edit"></i>
+            </a>
+             
+            <a href="{% url 'coche_delete' c.id %}" class="btn btn-danger btn-xs btn-flat">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          {% endif %}
+          {% for g in request.user.groups.all%}
+          {% if g.name == "Admin"%}
+          <td>{{ c.id }}</td>
+          <td>{{ c.Marca }}</td>
+          <td>{{ c.Modelo }}</td>
+          <td>{{ c.Color }}</td>
+          <td>{{ c.FechaMatri }}</td>
+          <td>{{ c.Cliente_id }}</td>
+          <td class="text-center">
+            <img src="{{ c.get_imagen }}" class="img-fluid d-block mx-auto" style=" width: 35px; height: 35px;">
+          </td>
+          <td>
+            <a href="{% url 'coche_edit' c.id %}" class="btn btn-warning btn-xs btn-flat">
+              <i class="fas fa-edit"></i>
+            </a>
+             
+            <a href="{% url 'coche_delete' c.id %}" class="btn btn-danger btn-xs btn-flat">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          {% endif %}
+          {% endfor %}
+          </td>
+        </tr>
+
+        {% endfor %}
+{% endblock %}

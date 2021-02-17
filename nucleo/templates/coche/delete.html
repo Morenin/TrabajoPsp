@@ -1,0 +1,29 @@
+{% extends 'body.html' %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        <div class="card card-default" >
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-plus"></i>
+                    {{ title }}
+                </h3>
+            </div>
+            <div class="card-body">
+            {% csrf_token %}
+            </div>
+            <div class="alert alert-danger alert-dismissible">
+                <h5><i class="icon fas fa-ban"></i> Mensaje</h5>
+                Estas seguro que quieres borrar el coche {{object.Marca}} {{object.Modelo}}
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary btn-flat">
+                    <i class="fas fa-save"></i> Aceptar
+                </button>
+                <a href="{{ index }}" class="btn btn-primary btn-flat">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

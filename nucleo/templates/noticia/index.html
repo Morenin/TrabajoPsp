@@ -1,0 +1,35 @@
+{% extends 'list.html' %}
+
+{% block columns %}
+        <tr>
+          <th scope="col">Titulo</th>
+          <th scope="col">Texto</th>
+          <th scope="col">Fecha de Creacion</th>
+          <th scope="col">Fecha de Modificacion</th>
+          <th scope="col">Mecanico</th>
+          <th scope="col">Foto</th>
+          <th scope="col">Opciones</th>
+        </tr>
+{% endblock %}
+{% block rows %}
+        {% for c in object_list %}
+        <tr>
+          <td>{{ c.Titulo }}</td>
+          <td>{{ c.Texto }}</td>
+          <td>{{ c.FechaCreacion }}</td>
+          <td>{{ c.FechaModi }}</td>
+          <td>{{ c.Id_Mecanico}}</td>
+          <td class="text-center">
+            <img src="{{ c.get_imagen }}" class="img-fluid d-block mx-auto" style=" width: 35px; height: 35px;">
+          </td>
+          <td>
+            <a href="{% url 'noticia_edit' c.id %}" class="btn btn-warning btn-xs btn-flat">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a href="{% url 'noticia_delete' c.id %}" class="btn btn-danger btn-xs btn-flat">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+{% endblock %}
