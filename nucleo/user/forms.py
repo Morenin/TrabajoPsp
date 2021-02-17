@@ -43,7 +43,7 @@ class UserForm(ModelForm):
                     'placeholder': 'Ingrese su password',
                 }
             ),
-            'groups': Select(attrs={'style':'width 100%'})
+            
             
         }
         exclude = {'is_staff','is_active','is_superuser','Direccion','user_permissions','last_login','date_joined'}

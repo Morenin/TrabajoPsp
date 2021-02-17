@@ -51,7 +51,7 @@ class ReparacionForm(ModelForm):
         fields='__all__'
         widgets = {
             'FechaArreglo': TextInput(attrs={'type':'date'}),
-            'Id_Mecanico': Select(attrs={'style':'width 100%'})
+            
         }
         exclude ={'Pendiente','Id_Cliente'} 
 
